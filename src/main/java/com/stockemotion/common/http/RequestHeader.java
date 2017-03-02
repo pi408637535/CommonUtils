@@ -1,0 +1,304 @@
+package com.stockemotion.common.http;
+
+/**
+ * Created by zoran on 14-9-15.
+ */
+public class RequestHeader {
+
+    private String apiLevel;
+
+    private String userName;
+
+    private String encode;
+
+    private String corporationId;
+
+    private String editionId;
+
+    private String subCoopId;
+
+    private String platformId;
+
+    private String operator;
+
+    private String deviceToken;
+
+    private String model;
+
+    private String locale;
+
+    private String udid;
+
+    private String imei;
+
+    private String imsi;
+
+    private String timeCost;
+
+    private String time;
+
+    private String userId;
+
+    private String sso_tk;
+
+    private String from;
+
+    private String channelId;
+
+    private String network;
+
+    private String osver;
+
+    private String carrier;
+
+    private String jailbreak;
+
+    private String appId;
+
+    private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getEditionId() {
+        return editionId;
+    }
+
+    public void setEditionId(String editionId) {
+        this.editionId = editionId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getApiLevel() {
+        return apiLevel;
+    }
+
+    public void setApiLevel(String apiLevel) {
+        this.apiLevel = apiLevel;
+    }
+
+    public String getEncode() {
+        return encode;
+    }
+
+    public void setEncode(String encode) {
+        this.encode = encode;
+    }
+
+    public String getCorporationId() {
+        return corporationId;
+    }
+
+    public void setCorporationId(String corporationId) {
+        this.corporationId = corporationId;
+    }
+
+    public String getSubCoopId() {
+        return subCoopId;
+    }
+
+    public void setSubCoopId(String subCoopId) {
+        this.subCoopId = subCoopId;
+    }
+
+    public String getPlatformId() {
+        return platformId;
+    }
+
+    public void setPlatformId(String platformId) {
+        this.platformId = platformId;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public void setOperator(String operator) {
+        this.operator = operator;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public String getUdid() {
+        return udid;
+    }
+
+    public void setUdid(String udid) {
+        this.udid = udid;
+    }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
+
+    public String getImsi() {
+        return imsi;
+    }
+
+    public void setImsi(String imsi) {
+        this.imsi = imsi;
+    }
+
+    public String getTimeCost() {
+        return timeCost;
+    }
+
+    public void setTimeCost(String timeCost) {
+        this.timeCost = timeCost;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getDeviceToken() {
+        return deviceToken;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+    public void setDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public String getSso_tk() {
+        return sso_tk;
+    }
+
+    public void setSso_tk(String sso_tk) {
+        this.sso_tk = sso_tk;
+    }
+
+    public String getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(String network) {
+        this.network = network;
+    }
+
+    public String getOsver() {
+        return osver;
+    }
+
+    public void setOsver(String osver) {
+        this.osver = osver;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    public String getJailbreak() {
+        return jailbreak;
+    }
+
+    public void setJailbreak(String jailbreak) {
+        this.jailbreak = jailbreak;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[apiLevel:"+this.getApiLevel()+"],");
+        sb.append("[imei:"+this.getImei()+"],");
+        sb.append("[imsi:"+this.getImsi()+"],");
+        sb.append("[deviceToken:"+this.getDeviceToken()+"],");
+        sb.append("[corporationId:"+this.getCorporationId()+"],");
+        sb.append("[editionId:"+this.getEditionId()+"],");
+        sb.append("[encode:"+this.getEncode()+"],");
+        sb.append("[locale:"+this.getLocale()+"],");
+        String model  = this.getModel();
+        if(model != null) {
+
+           model = this.getModel().replaceAll(" ", "");
+        }
+        sb.append("[model:"+model+"],");
+        sb.append("[platform:"+this.getPlatformId()+"],");
+        sb.append("[operator:"+this.getOperator()+"],");
+        sb.append("[subcoopId:"+this.getSubCoopId()+"],");
+        sb.append("[udid:"+this.getUdid()+"],");
+        sb.append("[userId:"+this.getUserId()+"],");
+        sb.append("[userName:"+this.getUserName()+"],");
+        sb.append("[time:"+this.getTime()+"],");
+        sb.append("[timeCost:"+this.getTimeCost()+"],");
+        sb.append("[sso_tk:"+this.getSso_tk()+"],");
+        sb.append("[from:"+this.getFrom()+"],");
+        sb.append("[network:"+this.getNetwork()+"],");
+        sb.append("[channelId:"+this.getChannelId()+"],");
+        sb.append("[osver:"+this.getOsver()+"],");
+        sb.append("[carrier:"+this.getCarrier()+"],");
+        sb.append("[jailbreak:"+this.getJailbreak()+"],");
+        sb.append("[appId:"+this.getAppId()+"],");
+        sb.append("[ip:"+this.getIp()+"]");
+        return sb.toString();
+    }
+}
