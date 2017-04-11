@@ -1,5 +1,6 @@
 package com.stockemotion.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -14,8 +15,10 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -105,7 +108,7 @@ public class HttpClientUtil
                     paramList.add(new BasicNameValuePair(key, param.get(key)));
                 }
                 // 模拟表单
-                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList);
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList, "UTF-8");
                 httpPost.setEntity(entity);
             }
             // 执行http请求
@@ -184,15 +187,27 @@ public class HttpClientUtil
         return resultString;
     }
 
-    /*public static void main(String[] args)
-    {
-        Map<String, String> map = Maps.newHashMap();
-        map.put("id", "1");
-        map.put("nickname", "走起");
-        map.put("introduce", "走起走起走起走起");
-        map.put("pictureUrl", "http://bucket-10048074.image.myqcloud.com/a0c516b1-2403-4cbc-8ab1-46c235a8b608");
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("name", "支付陈宫");
+        map.put("actorId", 102 + "");
+        map.put("actorName", "nickanme");
+        map.put("containerId", "pay");
+        map.put("containerName", "pay");
+        map.put("content", "支付成功--测试完截止时间2017-3-4");
+        map.put("containerName", "pay");
+        map.put("noticeContent", "setNoceContent");
 
-        String url = "http://127.0.0.1:8081/wd/search/user/addUser";
-        String result = HttpClientUtil.doPostJson(url, JsonUtils.TO_JSON(map));
-    }*/
+
+
+        String url = "http://api3.stockemotion.com/cms/appNotify";
+        String result = HttpClientUtil.doPost(url, map);
+
+        JSONObject jsonObject = JsonUtils.TO_JSONObject(result);
+        String string = (String) jsonObject.get("type");
+        if(string.equals("success"))
+        {
+            System.out.println(result);
+        }
+    }
 }
