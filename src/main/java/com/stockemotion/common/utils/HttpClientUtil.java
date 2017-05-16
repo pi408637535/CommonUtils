@@ -1,6 +1,11 @@
 package com.stockemotion.common.utils;
 
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.httpclient.Header;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -17,30 +22,24 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.charset.Charset;
+import java.util.*;
 
-public class HttpClientUtil
-{
 
-    public static String doGet(String url, Map<String, String> param, Map<String, String > heads)
-    {
+public class HttpClientUtil {
+
+    public static String doGet(String url, Map<String, String> param, Map<String, String> heads) {
 
         // 创建Httpclient对象
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         String resultString = "";
         CloseableHttpResponse response = null;
-        try
-        {
+        try {
             // 创建uri
             URIBuilder builder = new URIBuilder(url);
-            if (param != null)
-            {
-                for (String key : param.keySet())
-                {
+            if (param != null) {
+                for (String key : param.keySet()) {
                     builder.addParameter(key, param.get(key));
                 }
             }
@@ -48,8 +47,8 @@ public class HttpClientUtil
 
             // 创建http GET请求
             HttpGet httpGet = new HttpGet(uri);
-            if(heads != null){
-                for(Map.Entry<String, String> entry: heads.entrySet()){
+            if (heads != null) {
+                for (Map.Entry<String, String> entry : heads.entrySet()) {
                     httpGet.addHeader(entry.getKey(), entry.getValue());
                 }
             }
@@ -57,54 +56,47 @@ public class HttpClientUtil
             // 执行请求
             response = httpclient.execute(httpGet);
             // 判断返回状态是否为200
-            if (response.getStatusLine().getStatusCode() == 200)
-            {
+            if (response.getStatusLine().getStatusCode() == 200) {
                 resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                if (response != null)
-                {
+        } finally {
+            try {
+                if (response != null) {
                     response.close();
                 }
                 httpclient.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         return resultString;
     }
 
-    public static String doGet(String url, Map<String,String> haeads)
-    {
+    public static String doGet(String url, Map<String, String> haeads) {
         return doGet(url, null, haeads);
     }
 
-    public static String doPost(String url, Map<String, String> param)
-    {
+    /**
+     * 对应表单
+     *
+     * @param url
+     * @param param
+     * @return
+     */
+    public static String doPost(String url, Map<String, String> param) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         String resultString = "";
-        try
-        {
+        try {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
             // 创建参数列表
-            if (param != null)
-            {
+            if (param != null) {
                 List<NameValuePair> paramList = new ArrayList<NameValuePair>();
-                for (String key : param.keySet())
-                {
+                for (String key : param.keySet()) {
                     paramList.add(new BasicNameValuePair(key, param.get(key)));
                 }
                 // 模拟表单
@@ -114,19 +106,12 @@ public class HttpClientUtil
             // 执行http请求
             response = httpClient.execute(httpPost);
             resultString = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 response.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -135,29 +120,26 @@ public class HttpClientUtil
         return resultString;
     }
 
-    public static String doPost(String url)
-    {
+    public static String doPost(String url) {
         return doPost(url, null);
     }
 
-    public static String doPostJson(String url, String json){
+    public static String doPostJson(String url, String json) {
         return doPostJson(url, json, null);
     }
 
-    public static String doPostJson(String url, String json, Map<String, String > heads)
-    {
+    public static String doPostJson(String url, String json, Map<String, String> heads) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
         String resultString = "";
-        try
-        {
+        try {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(url);
             // 创建请求内容
             StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
-            if(heads != null){
-                for(Map.Entry<String, String> entry: heads.entrySet()){
+            if (heads != null) {
+                for (Map.Entry<String, String> entry : heads.entrySet()) {
                     httpPost.addHeader(entry.getKey(), entry.getValue());
                 }
             }
@@ -166,19 +148,12 @@ public class HttpClientUtil
             // 执行http请求
             response = httpClient.execute(httpPost);
             resultString = EntityUtils.toString(response.getEntity(), "utf-8");
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 response.close();
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -187,27 +162,122 @@ public class HttpClientUtil
         return resultString;
     }
 
-    public static void main(String[] args) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("name", "支付陈宫");
-        map.put("actorId", 102 + "");
-        map.put("actorName", "nickanme");
-        map.put("containerId", "pay");
-        map.put("containerName", "pay");
-        map.put("content", "支付成功--测试完截止时间2017-3-4");
-        map.put("containerName", "pay");
-        map.put("noticeContent", "setNoceContent");
+    /*
+  * 专门用于获取用户
+  * */
+    public static final JSONObject getHttpResponse(String url, Header header) {
+        JSONObject res = null;
+        HttpClient hc = new HttpClient();
+        GetMethod httpget = new GetMethod(url);
 
+        httpget.setRequestHeader(header);
 
-
-        String url = "http://api3.stockemotion.com/cms/appNotify";
-        String result = HttpClientUtil.doPost(url, map);
-
-        JSONObject jsonObject = JsonUtils.TO_JSONObject(result);
-        String string = (String) jsonObject.get("type");
-        if(string.equals("success"))
-        {
-            System.out.println(result);
+        try {
+            hc.executeMethod(httpget);
+            res = JsonUtils.TO_JSONObject(httpget.getResponseBodyAsString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return res;
     }
+
+    public static final JSONObject getHttpResponse(String url, String token) {
+        JSONObject res = null;
+        HttpClient hc = new HttpClient();
+        GetMethod httpget = new GetMethod(url);
+
+        httpget.setRequestHeader(new Header("Authorization", token));
+        try {
+            hc.executeMethod(httpget);
+            res = JsonUtils.TO_JSONObject(httpget.getResponseBodyAsString());
+        } catch (IOException io) {
+            System.out.println("Get http response from wode duration failed");
+        } catch (JSONException jsone) {
+            System.out.println("Failed to response to json");
+        }
+        return res;
+    }
+
+    public static final JSONObject httpPost(String url, JSONObject obj) throws IOException {
+        JSONObject res = null;
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            HttpPost post = new HttpPost(url);
+            StringEntity s = new StringEntity(obj.toString(),"UTF-8");
+            s.setContentEncoding("UTF-8");
+            s.setContentType("application/json");
+            post.setEntity(s);
+            CloseableHttpResponse response = httpclient.execute(post);
+            try {
+                HttpEntity entity = response.getEntity();
+                res = JsonUtils.TO_JSONObject(EntityUtils.toString(entity, Charset.forName("UTF-8")));
+                EntityUtils.consume(entity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
+        return res;
+    }
+
+    /*public static final JSONObject httpsPost(String url, JSONObject obj) throws KeyStoreException, NoSuchAlgorithmException,
+            CertificateException, IOException, KeyManagementException, JSONException
+    {
+        JSONObject res = null;
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        InputStream in = Reader.class.getResourceAsStream("/server.keystore");
+        keyStore.load(in, "123456".toCharArray());
+
+        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(keyStore, new TrustSelfSignedStrategy()).build();
+        SSLConnectionSocketFactory sslf = new SSLConnectionSocketFactory(sslcontext);
+        CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(sslf).build();
+        try
+        {
+            HttpPost post = new HttpPost(url);
+            StringEntity s = new StringEntity(obj.toString());
+            s.setContentEncoding("UTF-8");
+            s.setContentType("application/json");
+            post.setEntity(s);
+            CloseableHttpResponse response = httpclient.execute(post);
+            try
+            {
+                HttpEntity entity = response.getEntity();
+                res = JsonUtils.TO_JSONObject(EntityUtils.toString(entity, Charset.forName("UTF-8")));
+                EntityUtils.consume(entity);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                response.close();
+            }
+        }
+        finally
+        {
+            httpclient.close();
+        }
+        return res;
+    }*/
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+
+    }
+
+/*
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userId", 77);
+        jsonObject.put("authorityNumber", 1);
+        Date date = DateUtils.getCurrentTimestamp();
+        jsonObject.put("expireDate", date.getTime());
+        Date dateNow = DateUtils.getCurrentTimestamp();
+        jsonObject.put("effectiveDate", date.getTime());
+
+
+        String url = "http://api3.stockemotion.com/cms/authority/add";*/
 }
