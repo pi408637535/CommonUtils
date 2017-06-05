@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -266,6 +267,36 @@ public class HttpClientUtil {
     }*/
 
     public static void main(String[] args) throws UnsupportedEncodingException {
+        String url = "http://118.244.212.178:8001/wd/forum/comment/to_me/inner";
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("userId", 156+"");
+        map.put("pageNumber", 1+"");
+        map.put("pageSize", 1+"");
+
+        Map<String, String> head = new HashMap<String, String>();
+        head.put("version", 14+"");
+        head.put("deviceType", 1+"");
+
+
+        String string = HttpClientUtil.doGet(url, map, head);
+       // System.out.println(string);
+
+        String messageurl = "http://api3.stockemotion.com/cms/authority/add";
+
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("userId", 140);
+        jsonObject.put("code", 9);
+        String dateString = DateUtils.getCurrentTimestamp().toString();
+        jsonObject.put("date", dateString.substring(0, dateString.length() - 5));
+        jsonObject.put("title", "@我的");
+        jsonObject.put("content", string);
+
+        try {
+            HttpClientUtil.httpPost(messageurl, jsonObject);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
