@@ -20,7 +20,7 @@ public class ImageUtil {
      * @param format 图片格式.
      * @return
      */
-    public String convertImageToByte(String imagePath, String format) {
+    public static String convertImageToByte(String imagePath, String format) {
         File file = new File(imagePath);
         BufferedImage bi = null;
         ByteArrayOutputStream baos = null;
@@ -53,7 +53,7 @@ public class ImageUtil {
      * @param format 图片格式.
      * @return
      */
-    public String convertImageStreamToByte(InputStream imageInputStream, String format) {
+    public static String convertImageStreamToByte(InputStream imageInputStream, String format) {
         BufferedImage bi = null;
         ByteArrayOutputStream baos = null;
         String result = null;
@@ -85,7 +85,7 @@ public class ImageUtil {
      * @param imagePath 图片生成路径.
      * @param format 图片格式.
      */
-    public void convertByteToImage(String base64String, String imagePath, String format) {
+    public static void convertByteToImage(String base64String, String imagePath, String format) {
         byte[] bytes = null;
         ByteArrayInputStream bais = null;
         BufferedImage bi = null;

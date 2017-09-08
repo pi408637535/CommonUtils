@@ -267,37 +267,22 @@ public class HttpClientUtil {
     }*/
 
     public static void main(String[] args) throws UnsupportedEncodingException {
-        String url = "http://118.244.212.178:8001/wd/forum/comment/to_me/inner";
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("userId", 156+"");
-        map.put("pageNumber", 1+"");
-        map.put("pageSize", 1+"");
-
-        Map<String, String> head = new HashMap<String, String>();
-        head.put("version", 14+"");
-        head.put("deviceType", 1+"");
-
-
-        String string = HttpClientUtil.doGet(url, map, head);
-       // System.out.println(string);
-
-        String messageurl = "http://api3.stockemotion.com/cms/authority/add";
-
-
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userId", 140);
-        jsonObject.put("code", 9);
+        JSONObject message = new JSONObject();
+        jsonObject.put("userId", "190");
+        jsonObject.put("code", 5);
         String dateString = DateUtils.getCurrentTimestamp().toString();
-        jsonObject.put("date", dateString.substring(0, dateString.length() - 5));
-        jsonObject.put("title", "@我的");
-        jsonObject.put("content", string);
-
+        message.put("date", dateString.substring(0, dateString.length() - 5));
+        message.put("title", "支付成功");
+        message.put("content", "你已经购买该产品: " + "测试" + "。" + "    您的截止时间到: " + DateFormatUtils.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        jsonObject.put("message", message);
+        JSONObject jsonObject1 = null;
         try {
-            HttpClientUtil.httpPost(messageurl, jsonObject);
+            jsonObject1 =  HttpClientUtil.httpPost("http://api3.stockemotion.com/cms/message/send", jsonObject);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println(jsonObject1);
     }
 
 /*
