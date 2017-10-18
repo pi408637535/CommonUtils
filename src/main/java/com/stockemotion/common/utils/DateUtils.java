@@ -35,6 +35,10 @@ public class DateUtils
 
     private static String defaultDatePattern = "yyyy-MM-dd HH:mm";
 
+    public static Long getCurrentTimestampLong(){
+       return new Date().getTime();
+    }
+
     public static String continueTime(Long startTime, Long... endTime)
     {
         Date now = new Date();
